@@ -1,33 +1,39 @@
 <template>
-  <div class="black-bg" v-if="모달창열렸니 == true">
-    <div class="white-bg">
-      <h4>상세페이지임</h4>
-      <p>상세페이지 내용임</p>
-      <button @click="모달창열렸니 = false">닫기</button>
-    </div>
-  </div>
-
+  <Modal
+    @closeModal="모달창열렸니 = false"
+    :원룸들="원룸들"
+    :pushButton="pushButton"
+    :모달창열렸니="모달창열렸니"
+  />
   <div class="menu">
     <a v-for="작명 in 메뉴들" :key="작명">{{ 작명 }}</a>
   </div>
 
-  <div v-for="(원룸, index) in 원룸들" :key="index">
-    <img :src="원룸.image" class="room-img" />
-    <h4 @click="모달창열렸니 = true">{{ 원룸.title }}</h4>
-    <p>{{ 원룸.price }}원</p>
-    <button @click="increase(index)">허위매물신고</button>
-    <span>신고수 : {{ 신고수[index] }}</span>
-  </div>
+  <Discount v-bind="오브젝트" />
+
+  <Card
+    @openModal="
+      모달창열렸니 = true;
+      pushButton = index;
+    "
+    :원룸="원룸"
+    v-for="(원룸, index) in 원룸들"
+    :key="index"
+  />
 </template>
 
 <script>
 import data from "./assets/oneroom.js";
+import Discount from "./Discount.vue";
+import Modal from "./Modal.vue";
+import Card from "./Card.vue";
 
 export default {
   name: "App",
-  components: {},
   data() {
     return {
+      오브젝트: { name: "kim", age: 20 },
+      pushButton: 0,
       원룸들: data,
       모달창열렸니: false,
       신고수: [0, 0, 0, 0, 0, 0],
@@ -40,6 +46,11 @@ export default {
     increase(num) {
       this.신고수[num]++;
     },
+  },
+  components: {
+    Discount,
+    Modal,
+    Card,
   },
 };
 </script>
