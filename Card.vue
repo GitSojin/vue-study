@@ -1,7 +1,7 @@
 <template>
   <div>
     <img :src="원룸.image" class="room-img" />
-    <h4>{{ 원룸.title }}</h4>
+    <h4 @click="send">{{ 원룸.title }}</h4>
     <p>{{ 원룸.price }}원</p>
     <!-- <button @click="increase(index)">허위매물신고</button>
     <span>신고수 : {{ 신고수[index] }}</span> -->
@@ -12,6 +12,11 @@ export default {
   name: "Card",
   props: {
     원룸: Object,
+  },
+  methods: {
+    send() {
+      this.$emit("openModal", this.원룸.id);
+    },
   },
 };
 </script>

@@ -10,7 +10,15 @@
 
   <Discount v-bind="오브젝트" />
 
-  <Card :원룸="원룸" v-for="(원룸, index) in 원룸들" :key="index" />
+  <Card
+    @openModal="
+      모달창열렸니 = true;
+      pushButton = index;
+    "
+    :원룸="원룸"
+    v-for="(원룸, index) in 원룸들"
+    :key="index"
+  />
 </template>
 
 <script>
