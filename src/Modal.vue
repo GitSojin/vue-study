@@ -18,6 +18,12 @@ export default {
       month: 1,
     };
   },
+  beforeUpdate() {
+    if (this.month == 2) {
+      alert("3개월 이상만 가능합니다.");
+    }
+  },
+
   watch: {
     month(a) {
       if (isNaN(a) == true) {

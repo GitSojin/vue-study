@@ -10,7 +10,7 @@
     <a v-for="작명 in 메뉴들" :key="작명">{{ 작명 }}</a>
   </div>
 
-  <Discount v-bind="오브젝트" v-if="showDiscount == true" />
+  <Discount :discountNumber="discountNumber" v-if="showDiscount == true" />
 
   <button @click="priceSort">가격순정렬</button>
   <button @click="sortBack">되돌리기</button>
@@ -36,6 +36,7 @@ export default {
   name: "App",
   data() {
     return {
+      discountNumber: 30,
       showDiscount: true,
       원룸들오리지널: [...data],
       오브젝트: { name: "kim", age: 20 },
@@ -61,9 +62,9 @@ export default {
   },
 
   mounted() {
-    setTimeout(() => {
-      this.showDiscount = false;
-    }, 2000);
+    setInterval(() => {
+      this.discountNumber--;
+    }, 1000);
   },
 
   components: {
