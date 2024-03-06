@@ -1,15 +1,19 @@
 <template>
-  <Modal
-    @closeModal="모달창열렸니 = false"
-    :원룸들="원룸들"
-    :pushButton="pushButton"
-    :모달창열렸니="모달창열렸니"
-  />
+  <transition name="fade">
+    <Modal
+      @closeModal="모달창열렸니 = false"
+      :원룸들="원룸들"
+      :pushButton="pushButton"
+      :모달창열렸니="모달창열렸니"
+  /></transition>
   <div class="menu">
     <a v-for="작명 in 메뉴들" :key="작명">{{ 작명 }}</a>
   </div>
 
-  <Discount v-bind="오브젝트" />
+  <Discount v-bind="오브젝트" v-if="showDiscount == true" />
+
+  <button @click="priceSort">가격순정렬</button>
+  <button @click="sortBack">되돌리기</button>
 
   <Card
     @openModal="
@@ -32,6 +36,8 @@ export default {
   name: "App",
   data() {
     return {
+      showDiscount: true,
+      원룸들오리지널: [...data],
       오브젝트: { name: "kim", age: 20 },
       pushButton: 0,
       원룸들: data,
@@ -46,7 +52,20 @@ export default {
     increase(num) {
       this.신고수[num]++;
     },
+    priceSort() {
+      this.원룸들.sort((a, b) => a.title.localeCompare(b.title));
+    },
+    sortBack() {
+      this.원룸들 = [...this.원룸들오리지널];
+    },
   },
+
+  mounted() {
+    setTimeout(() => {
+      this.showDiscount = false;
+    }, 2000);
+  },
+
   components: {
     Discount,
     Modal,
@@ -56,6 +75,15 @@ export default {
 </script>
 
 <style>
+.fade-enter-from {
+  opacity: 0;
+}
+.fade-enter-active {
+  transition: all 1s;
+}
+.fade-enter-to {
+  opacity: 1;
+}
 body {
   margin: 0;
 }
